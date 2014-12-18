@@ -13,7 +13,6 @@ import com.vexsoftware.votifier.Votifier;
 import com.vexsoftware.votifier.model.Vote;
 import com.vexsoftware.votifier.model.VoteListener;
 
-
 /**
  * A VoteListener that rewards via EssEco.
  * 
@@ -32,7 +31,7 @@ public class essEcoListener implements VoteListener
 	private String transfer = "&4{amount} has been awarded to your account!";
 
 	/**
-	 * Instantiates a new iConomy listener.
+	 * Instantiates a new listener.
 	 */
 	public essEcoListener()
 	{
@@ -40,7 +39,7 @@ public class essEcoListener implements VoteListener
 		try
 		{
 			// Create the file if it doesn't exist.
-			final File configFile = new File("./plugins/Votifier/essEcoListener.ini");
+			final File configFile = new File("./plugins/Votifier/essEcoListener.conf");
 			if (!configFile.exists())
 			{
 				configFile.createNewFile();
@@ -68,12 +67,11 @@ public class essEcoListener implements VoteListener
 		}
 		catch (Exception ex)
 		{
-			logger.log(Level.WARNING, "Unable to load essEcoListener.ini, using default reward value of: " + amount);
+			logger.log(Level.WARNING, "Unable to load essEcoListener.conf, using default reward value of: " + amount);
 		}
 	}
 
-	@Override
-	public void voteMade(final Vote vote)
+	public void voteMade(Vote vote)
 	{
 		final String username = vote.getUsername();
 		if (Economy.playerExists(username))
@@ -112,5 +110,14 @@ public class essEcoListener implements VoteListener
 	{
 		return message.replace('&', '§').replace("§§", "&").replace("{player}", player).replace("{amount}", amount.toString()).replace("{site}", site.getServiceName());
 	}
+	
+	
+	//TODO: log the vote when we recieve one.
+	/*@EventHandler(priority=EventPriority.NORMAL)
+    	public void onVotifierEvent(VotifierEvent event) {
+        	Vote vote = event.getVote();
+         	
+    	}*/
+
 }
 
